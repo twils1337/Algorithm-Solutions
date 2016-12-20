@@ -105,7 +105,7 @@ void midTest()
 //O(1) space complexity
 void revSentTest()
 {
-	vector<string> v = { "I", "am", "owning", "this", "interview", "tomorrow" };
+	vector<string> v = { "I", "am", "studying", "for", "this", "interview", "tomorrow" };
 	for (int i = 0, j = v.size() - 1; i < j; ++i, --j)
 	{
 		string t = v[i];
@@ -196,27 +196,27 @@ void Int2StringTest()
 	s = Int2String(123);
 	cout << "123 is " << s << endl;
 	s = Int2String(1234);
-	cout << "1234 is " << s << endl;
+	cout << "1,234 is " << s << endl;
 	s = Int2String(12345);
-	cout << "12345 is " << s << endl;
+	cout << "12,345 is " << s << endl;
 	s = Int2String(123456);
-	cout << "123456 is " << s << endl;
+	cout << "123,456 is " << s << endl;
 	s = Int2String(1234567);
-	cout << "1234567 is " << s << endl;
+	cout << "1,234,567 is " << s << endl;
 	s = Int2String(12345678);
-	cout << "12345678 is " << s << endl;
+	cout << "12,345,678 is " << s << endl;
 	s = Int2String(123456789);
-	cout << "123456789 is " << s << endl;
+	cout << "123,456,789 is " << s << endl;
 	s = Int2String(2147483647);
-	cout << "2147483647 is " << s << endl;
+	cout << "2,147,483,647 is " << s << endl;
 	s = Int2String(10);
 	cout << "10 is " << s << endl;
 	s = Int2String(101);
 	cout << "101 is " << s << endl;
 	s = Int2String(10000001);
-	cout << "10000001 is " << s << endl;
+	cout << "10,000,001 is " << s << endl;
 	s = Int2String(99999999);
-	cout << "99999999 is " << s << endl;
+	cout << "99,999,999 is " << s << endl;
 }
 
 void revCStest()

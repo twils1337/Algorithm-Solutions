@@ -398,7 +398,8 @@ string Int2String(int num)
 	{ 19,"nineteen" },{ 18,"eighteen" },{ 17,"seventeen" },{ 16,"sixteen" },{ 15,"fifteen" },{ 14,"fifteen" },{ 13,"thirteen" },
 	{ 12,"twelve" },{ 11,"eleven" },{ 10,"ten" },{ 9,"nine" },{ 8,"eight" },{ 7,"seven" },{ 6,"six" },{ 5,"five" },{ 4,"four" },
 	{ 3,"three" },{ 2,"two" },{ 1,"one" } };
-	queue<int> q;
+	if (um.find(num) != um.end()) return um[num];
+	deque<int> dq;
 	int dec = 1000000000;
 	string result = "";
 	if (num < 0)
@@ -420,73 +421,111 @@ string Int2String(int num)
 		}
 		else
 		{
-			q.push(counter);
+			dq.push_back(counter);
 			counter = 0;
-			if (dec != 10 && dec != 100 && um.find(dec) != um.end())
+			bool ThreeZeros = true;
+			if (um.find(dec) != um.end() && dec != 100 && dec != 10)
 			{
-				bool ThreeZeros = true;
-				int top = q.front();
-				q.pop();
-				switch (q.size())
+				int top = dq.front();
+				dq.pop_front();
+				switch (dq.size())
 				{
-				case 2:
-					if (top > 0) //there's a hundred's spot
-					{
-						result += um[top] + " " + um[100] + " ";
-						ThreeZeros = false;
-					}
-					top = q.front();
-					q.pop();
-					if (top > 0) //there's a ten's spot
-					{
-						int next = q.front();
-						q.pop();
-						if (top >= 2) //it's teens or below
+					case 2:
+						if (top > 0) //there's a hundreds spot
 						{
-							result += um[top * 10 + next] + " ";
-							if (next > 0)
-								result += um[next] + " ";
+							result += um[top] + " " + um[100] + " ";
 							ThreeZeros = false;
 						}
-						else // 20 <= num <=99
+						top = dq.front();
+						dq.pop_front();
+						if (top > 0) //there's a ten's spot
 						{
-							result += um[top * 10] + " ";
-							if (next > 0)
-								um[next] + " ";
 							ThreeZeros = false;
+							if (top >= 2) //99 <= num <= 20
+							{
+								result += um[top * 10] + " ";
+								top = dq.front();
+								dq.pop_front();
+								if (top > 0) //there's a one's spot
+								{
+									result += um[top] + " ";
+								}
+							}
+							else
+							{
+
+								if (top == 1) //it's a teen
+								{
+									result += um[10 + dq.front()] + " ";
+									dq.pop_front();
+									ThreeZeros = false;
+								}
+								else if (dq.front() > 0) //only a single digit in last place of sliding window
+								{
+									result += um[dq.front()] + " ";
+									dq.pop_front();
+									ThreeZeros = false;
+								}
+								
+							}
 						}
-					}
-					else
-					{
-						if (q.front() > 0)
-							result += um[q.front()] + " ";
-						q.pop();
-					}
-					break;
-				case 1:
-					if (top > 0) //there's a ten's spot
-					{
+						else
+						{
+							if (top == 1) //it's a teen
+							{
+								result += um[10 + dq.front()] + " ";
+								ThreeZeros = false;
+							}
+							else if (dq.front() > 0) //only a single digit in last place of sliding window
+							{
+
+								result += um[dq.front()] + " ";
+								ThreeZeros = false;
+							}
+							dq.pop_front();
+						}
+						break;
+					case 1:
+						if (top > 0) //there's a ten's spot
+						{
+							ThreeZeros = false;
+							if (top >= 2) //99 <= num <= 20
+							{
+								result += um[top * 10] + " ";
+								top = dq.front();
+								dq.pop_front();
+								if (top > 0) //there's a one's spot
+								{
+									result += um[top] + " ";
+								}
+								ThreeZeros = false;
+							}
+							else
+							{
+
+								if (top == 1) //it's a teen
+								{
+									result += um[10 + dq.front()] + " ";
+									dq.pop_front();
+								}
+								else if (dq.front() > 0) //only a single digit in last place of sliding window
+								{
+									result += um[dq.front()] + " ";
+									dq.pop_front();
+								}
+							}
+						}
+						break;
+					default:
+						result += um[top] + " ";
 						ThreeZeros = false;
-						int next = q.front();
-						q.pop();
-						if (top < 2) //it's teens or below
-						{
-							result += um[top * 10 + next] + " ";
-						}
-						else // 20 <= num <=99
-						{
-							result += um[top * 10] + " " + um[next] + " ";
-						}
-					}
-					break;
-				case 0:
-					result += um[top] + " ";
-					break;
+						break;
 				}
-				if (dec > 100 && um.find(dec) != um.end() && !ThreeZeros)
-				{
-					result += um[dec] + " ";
-				}
+			}
+			if (um.find(dec) != um.end() && dec > 100 && !ThreeZeros)
+			{
+				result += um[dec] + " ";
+				dq.clear();
 			}
 			dec /= 10;
 		}
