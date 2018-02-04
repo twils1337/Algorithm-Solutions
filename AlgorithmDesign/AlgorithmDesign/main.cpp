@@ -33,5 +33,6 @@ void main()
 	fib_test();
 	cout << endl;
 	isBalancedBSTTest();
+	revCStest();
 	system("pause");
 }

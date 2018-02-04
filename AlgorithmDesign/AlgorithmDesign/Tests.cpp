@@ -226,6 +226,9 @@ void revCStest()
 	revCSV(s);
 	cout << "Reverse: " << s << endl;
 	cout << "Changed?: " << s << endl;
+	char t[] = "Hello World!!";
+	cout << "Reverse: " << t << endl;
+	cout << "Changed?: " << revCS(t) << endl;
 }
 
 void fact_test()
