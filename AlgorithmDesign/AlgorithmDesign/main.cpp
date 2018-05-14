@@ -6,7 +6,7 @@ void main()
 {
 	DFS_Test();
 	cout << endl;
-	BFS_Test();
+	/*BFS_Test();
 	cout << endl;
 	eqPtest();
 	cout << endl;
@@ -30,7 +30,7 @@ void main()
 	cout << endl;
 	fact_test();
 	cout << endl;
-	fib_test();
+	fib_test();*/
 	cout << endl;
 	isBalancedBSTTest();
 	revCStest();

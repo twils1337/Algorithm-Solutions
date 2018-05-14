@@ -222,13 +222,12 @@ void Int2StringTest()
 void revCStest()
 {
 	char s[] = "Hello World!!";
-	cout << "B4: " << s << endl;
 	revCSV(s);
 	cout << "Reverse: " << s << endl;
-	cout << "Changed?: " << s << endl;
+	cout << "Changed: " << s << endl;
 	char t[] = "Hello World!!";
 	cout << "Reverse: " << t << endl;
-	cout << "Changed?: " << revCS(t) << endl;
+	cout << "Change: " << revCS(t) << endl;
 }
 
 void fact_test()
@@ -288,8 +287,8 @@ void isBalancedBSTTest()
 	root->left->right = new BTree(25);
 	root->right->left = new BTree(30);
 	root->right->right = new BTree(35);
-	cout << "Is tree balanced? " << isBalanced(root) << endl;
+	cout << "Is tree balanced? " << (isBalanced(root)?"Yes":"No") << endl;
 	root->right->right->right = new BTree(40);
 	root->right->right->right->right = new BTree(45);
-	cout << "Is tree balanced? " << isBalanced(root) << endl;
+	cout << "Is tree balanced? " << (isBalanced(root)?"Yes":"No") << endl;
 }

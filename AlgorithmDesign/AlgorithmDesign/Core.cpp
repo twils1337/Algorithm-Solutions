@@ -125,15 +125,29 @@ void DFS(BTree* root, Order o)
 void DFS_I(BTree* t)
 {
 	stack<BTree*> s;
-	s.push(t);
-	while (!s.empty())
+	BTree* current = t;
+	bool done = false;
+	while (!done)
 	{
-		BTree* sTop = s.top();
-		cout << sTop->val << " ";
-		s.pop();
-		//Pre-Order
-		if (sTop->right) s.push(sTop->right);
-		if (sTop->left) s.push(sTop->left);
+		if (current)
+		{
+			s.push(current);
+			current = current->left;
+		}
+		else
+		{
+			if (!s.empty())
+			{
+				current = s.top();
+				cout << current->val << " ";
+				s.pop();
+				current = current->right;
+			}
+			else
+			{
+				done = true;
+			}
+		}
 	}
 }
 
@@ -541,6 +555,7 @@ char* revCS(char s[])
 	{
 		rev[i] = s[j];
 	}
+	rev[strlen(s)] = 0;
 	return rev;
 }
 
