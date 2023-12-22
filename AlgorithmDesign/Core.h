@@ -28,6 +28,7 @@ struct Node
 	Node(int v = 0, Node* n = nullptr) : val(v), next(n) {}
 };
 
+
 int fib(int n);
 int it_fib(unsigned int n);
 BTree* createSimpleBtree();
@@ -49,7 +50,8 @@ Node* convertBST2LL(BTree* b);
 bool cycleDetected(Node* ll);
 Node* detectCycle(Node* head);
 Node* merge2LL(Node* l1, Node* l2);
-string Int2String(int num);
+string convertNumberWindow(const unordered_map<int, string>& constMap, const string num, const int start, const int end);
+string intToString(int num);
 char* revCS(char s[]);
 void revCSV(char s[]);
 long long factorial_it(long long n);

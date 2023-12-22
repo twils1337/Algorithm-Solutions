@@ -1,4 +1,4 @@
-#include "Core.h"
+#include "core.h"
 //time complexity = O(2^n)
 int fib(int n)
 {
@@ -404,147 +404,96 @@ Node* merge2LL(Node* l1, Node* l2)
 }
 
 
-string Int2String(int num)
+string intToString(int num)
 {
-	if (num == 0) return "zero";
-	unordered_map<int, string> um = { { 1000000000, "billion" },{ 1000000,"million" },{ 1000, "thousand" },{ 100, "hundred" },{ 90, "ninety" },
-	{ 80,"eighty" },{ 70,"seventy" },{ 60,"sixty" },{ 50, "fifty" },{ 40,"forty" },{ 30,"thirty" },{ 20,"twenty" },
-	{ 19,"nineteen" },{ 18,"eighteen" },{ 17,"seventeen" },{ 16,"sixteen" },{ 15,"fifteen" },{ 14,"fifteen" },{ 13,"thirteen" },
-	{ 12,"twelve" },{ 11,"eleven" },{ 10,"ten" },{ 9,"nine" },{ 8,"eight" },{ 7,"seven" },{ 6,"six" },{ 5,"five" },{ 4,"four" },
-	{ 3,"three" },{ 2,"two" },{ 1,"one" } };
-	if (um.find(num) != um.end()) return um[num];
-	deque<int> dq;
-	int dec = 1000000000;
-	string result = "";
-	if (num < 0)
-	{
-		result += "negative ";
-		num *= -1;
+	if (num == 0) {
+		return "zero";
 	}
-	int counter = 0;
-	while (num - dec < 0)
+	const unordered_map<int, string> constMap = { 
+		{ 1000000000, "billion" }, { 1000000,"million" }, { 1000, "thousand" }, { 100, "hundred" },
+		{ 90, "ninety" }, { 80,"eighty" }, { 70,"seventy" }, { 60,"sixty" }, { 50, "fifty" },
+		{ 40,"forty" }, { 30,"thirty" }, { 20,"twenty" }, { 19,"nineteen" }, { 18,"eighteen" },
+		{ 17,"seventeen" }, { 16,"sixteen" }, { 15,"fifteen" }, { 14,"fifteen" }, { 13,"thirteen" },
+		{ 12,"twelve" }, { 11,"eleven" }, { 10,"ten" }, { 9,"nine" }, { 8,"eight" }, { 7,"seven" },
+		{ 6,"six" }, { 5,"five" }, { 4,"four" }, { 3,"three" }, { 2,"two" }, { 1,"one" } 
+	};
+
+	if (constMap.find(num) != constMap.end()) 
 	{
-		dec /= 10;
+		return constMap.at(num);
 	}
-	while (num >= 0 && dec)
+
+	auto numStr = to_string(abs(num));
+	int start = numStr.length() >= 3 ? numStr.length() - 3 : 0;
+	int end = numStr.length() - 1;
+	if (end < 0) 
 	{
-		if ((num - dec) >= 0)
+		return "Error: invalid";
+	}
+	auto dec = 0;
+	stack<string> conversions;
+
+	while (end >= 0)
+	{
+		string windowConversion = convertNumberWindow(constMap, numStr, start, end);
+
+		conversions.push(windowConversion);
+		if (start - 3 > 0) 
 		{
-			num -= dec;
-			++counter;
+			start -= 3;
 		}
-		else
+		else 
 		{
-			dq.push_back(counter);
-			counter = 0;
-			bool ThreeZeros = true;
-			if (um.find(dec) != um.end() && dec != 100 && dec != 10)
-			{
-				int top = dq.front();
-				dq.pop_front();
-				switch (dq.size())
-				{
-					case 2:
-						if (top > 0) //there's a hundreds spot
-						{
-							result += um[top] + " " + um[100] + " ";
-							ThreeZeros = false;
-						}
-						top = dq.front();
-						dq.pop_front();
-						if (top > 0) //there's a ten's spot
-						{
-							ThreeZeros = false;
-							if (top >= 2) //99 <= num <= 20
-							{
-								result += um[top * 10] + " ";
-								top = dq.front();
-								dq.pop_front();
-								if (top > 0) //there's a one's spot
-								{
-									result += um[top] + " ";
-								}
-							}
-							else
-							{
-
-								if (top == 1) //it's a teen
-								{
-									result += um[10 + dq.front()] + " ";
-									dq.pop_front();
-									ThreeZeros = false;
-								}
-								else if (dq.front() > 0) //only a single digit in last place of sliding window
-								{
-									result += um[dq.front()] + " ";
-									dq.pop_front();
-									ThreeZeros = false;
-								}
-								
-							}
-						}
-						else
-						{
-							if (top == 1) //it's a teen
-							{
-								result += um[10 + dq.front()] + " ";
-								ThreeZeros = false;
-							}
-							else if (dq.front() > 0) //only a single digit in last place of sliding window
-							{
-
-								result += um[dq.front()] + " ";
-								ThreeZeros = false;
-							}
-							dq.pop_front();
-						}
-						break;
-					case 1:
-						if (top > 0) //there's a ten's spot
-						{
-							ThreeZeros = false;
-							if (top >= 2) //99 <= num <= 20
-							{
-								result += um[top * 10] + " ";
-								top = dq.front();
-								dq.pop_front();
-								if (top > 0) //there's a one's spot
-								{
-									result += um[top] + " ";
-								}
-								ThreeZeros = false;
-							}
-							else
-							{
-
-								if (top == 1) //it's a teen
-								{
-									result += um[10 + dq.front()] + " ";
-									dq.pop_front();
-								}
-								else if (dq.front() > 0) //only a single digit in last place of sliding window
-								{
-									result += um[dq.front()] + " ";
-									dq.pop_front();
-								}
-							}
-						}
-						break;
-					default:
-						result += um[top] + " ";
-						ThreeZeros = false;
-						break;
-				}
-			}
-			if (um.find(dec) != um.end() && dec > 100 && !ThreeZeros)
-			{
-				result += um[dec] + " ";
-				dq.clear();
-			}
-			dec /= 10;
+			start = 0;
 		}
+		end -= 3;
+	}
+
+	string result = num < 0 ? "negative ": "";
+	auto thousandMultiple = 1000;
+	auto kPow = 0;
+	while (!conversions.empty()) {
+		auto top = conversions.top();
+		if (top != "") {
+			result += conversions.top() + " ";
+			if (conversions.size() > 1) {
+				auto s = pow(1000, conversions.size() - 1);
+				result += constMap.at(pow(1000, conversions.size() - 1)) + " ";
+			}
+		}
+		conversions.pop();
 	}
 	return result;
+}
+
+string convertNumberWindow(const unordered_map<int, string>& constMap, const string num, const int start, const int end) {
+	string windowStr = "";
+	auto winSize = end - start + 1;
+	auto tensSpot = winSize == 3 ? start + 1 : (winSize == 2 ? start : -1);
+	auto onesSpot = winSize == 3 ? end : (winSize == 2 ? start + 1 : (winSize == 1 ? start : -1));
+	if (winSize == 3)
+	{
+		if (num[start] != '0') {
+			windowStr += (constMap.at(num[start] - '0')) + " hundred ";
+		}
+		else if (num[start + 1] == '0' && num[end] == '0') {
+			return windowStr;
+		}
+	}
+	if (tensSpot >= 0) {
+		if (num[tensSpot] == '1') {
+			auto rest = 10 + (num[end] - '0');
+			windowStr += constMap.at(rest);
+			return windowStr;
+		}
+		else if(num[tensSpot] != '0'){
+			windowStr += constMap.at((num[tensSpot] - '0') * 10) + " ";
+		}
+	}
+	if(onesSpot >= 0) {
+		windowStr += constMap.at(num[onesSpot] - '0');
+	}
+	return windowStr;
 }
 
 

@@ -1,4 +1,4 @@
-#include "Tests.h"
+#include "tests.h"
 
 void DFS_Test()
 {
@@ -187,36 +187,42 @@ void Merge2LLTest()
 
 void Int2StringTest()
 {
-	string s = Int2String(0);
+	string s = intToString(0);
 	cout << "0 is " << s << endl;
-	s = Int2String(1);
+	s = intToString(1);
 	cout << "1 is " << s << endl;
-	s = Int2String(12);
+	s = intToString(12);
 	cout << "12 is " << s << endl;
-	s = Int2String(123);
+	s = intToString(123);
 	cout << "123 is " << s << endl;
-	s = Int2String(1234);
+	s = intToString(1234);
 	cout << "1,234 is " << s << endl;
-	s = Int2String(12345);
+	s = intToString(12345);
 	cout << "12,345 is " << s << endl;
-	s = Int2String(123456);
+	s = intToString(123456);
 	cout << "123,456 is " << s << endl;
-	s = Int2String(1234567);
+	s = intToString(1234567);
 	cout << "1,234,567 is " << s << endl;
-	s = Int2String(12345678);
+	s = intToString(12345678);
 	cout << "12,345,678 is " << s << endl;
-	s = Int2String(123456789);
+	s = intToString(123456789);
 	cout << "123,456,789 is " << s << endl;
-	s = Int2String(2147483647);
+	s = intToString(2147483647);
 	cout << "2,147,483,647 is " << s << endl;
-	s = Int2String(10);
+	s = intToString(10);
 	cout << "10 is " << s << endl;
-	s = Int2String(101);
+	s = intToString(101);
 	cout << "101 is " << s << endl;
-	s = Int2String(10000001);
+	s = intToString(10000001);
 	cout << "10,000,001 is " << s << endl;
-	s = Int2String(99999999);
+	s = intToString(99999999);
 	cout << "99,999,999 is " << s << endl;
+	s = intToString(-1);
+	cout << "-1 is " << s << endl;
+	s = intToString(-1001);
+	cout << "-1,001 is " << s << endl;
+	s = intToString(-123456789);
+	cout << "-123,456,789 is " << s << endl;
 }
 
 void revCStest()
