@@ -31,8 +31,9 @@ void main()
 	fact_test();
 	cout << endl;
 	fib_test();*/
-	cout << endl;
-	isBalancedBSTTest();
-	revCStest();
+	//cout << endl;
+	//isBalancedBSTTest();
+	//revCStest();
+	Int2StringTest();
 	system("pause");
 }
